@@ -56,7 +56,8 @@ func (node *Node) Delete(value int) *Node {
     } else if node.right == nil {
       return node.left
     } else {
-      return &Node{ value: node.right.deleteMin(), left: node.left, right: node.right }
+      val, r_ptr := node.right.deleteMin()
+      return &Node{ value: val, left: node.left, right: r_ptr }
     }
   }
   return node
@@ -66,12 +67,12 @@ func (node *Node) isLeaf() bool {
   return node.left == nil && node.right == nil
 }
 
-func (node *Node) deleteMin() int {
+func (node *Node) deleteMin() (int, *Node) {
   if node.left == nil {
-    ret := node.value
-    *node = *node.right
-    return ret
+    return node.value, nil
   } else {
-    return node.left.deleteMin()
+    v, l_ptr := node.left.deleteMin()
+    node.left = l_ptr
+    return v, l_ptr
   }
 }

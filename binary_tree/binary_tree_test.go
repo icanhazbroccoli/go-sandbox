@@ -2,7 +2,6 @@ package binaryTree
 
 import (
   "testing"
-  "fmt"
 )
 
 func TestMember(t *testing.T) {
@@ -55,16 +54,15 @@ func TestInsert(t *testing.T) {
   }
 }
 
-func TestDelete(t *testing.T) {
+func TestDelete1(t *testing.T) {
   tree := Node{
     value: 10, left: &Node{ value: 0 }, right: &Node{ value: 20 },
   }
-  tree.Delete(0)
+  tree = *tree.Delete(0)
   if tree.Member(0) {
     t.Log("0 is still a member")
     t.Fail()
   }
-  fmt.Println(tree)
   if tree.Member(20) != true {
     t.Log("20 is not a member")
     t.Fail()
@@ -75,6 +73,29 @@ func TestDelete(t *testing.T) {
   }
   if tree.left != nil {
     t.Log("Left child is not nil")
+    t.Fail()
+  }
+}
+
+func TestDelete2(t *testing.T) {
+  tree := Node{
+    value: 10, left: &Node{ value: 0 }, right: &Node{ value: 20 },
+  }
+  tree = *tree.Delete(10)
+  if tree.Member(10) {
+    t.Log("10 is still a member")
+    t.Fail()
+  }
+  if tree.Member(20) != true {
+    t.Log("20 is not a member")
+    t.Fail()
+  }
+  if tree.Member(0) != true {
+    t.Log("0 is not a member")
+    t.Fail()
+  }
+  if tree.right != nil {
+    t.Log("Right child is not nil")
     t.Fail()
   }
 }
